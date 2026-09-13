@@ -94,8 +94,8 @@ $activePage  = 'services';
                         <span class="badge bg-success-subtle text-success-emphasis rounded-pill px-3 py-2 mb-2">
                             <i class="bi bi-tools me-1"></i> Professional Nursery Services
                         </span>
-                        <h2 class="fw-bold mb-2">Expert Gardening & Landscape Solutions</h2>
-                        <p class="text-white-50 mb-3">
+                        <h2 class="customer-hero-title fw-bold mb-2">Expert Gardening & Landscape Solutions</h2>
+                        <p class="customer-hero-description mb-3">
                             From complete lawn design and tree pruning to drip irrigation installations in Matara, our certified horticulturists ensure your green spaces flourish sustainably.
                         </p>
                         <div class="d-flex flex-wrap gap-2">

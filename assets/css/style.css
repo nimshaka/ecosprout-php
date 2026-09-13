@@ -61,6 +61,19 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--eco-primary-dark);
 }
 
+.text-white h1,
+.text-white h2,
+.text-white h3,
+.text-white h4,
+.text-white h5,
+.text-white h6 {
+    color: #f4fff8;
+}
+
+.text-white .text-white-50 {
+    color: #d8f3e3 !important;
+}
+
 a { color: var(--eco-primary); text-decoration: none; transition: var(--transition); }
 a:hover { color: var(--eco-primary-light); }
 

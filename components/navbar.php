@@ -71,7 +71,8 @@ $roleBadge = match($userRole) {
                 </li>
                 <?php endif; ?>
                 <li>
-                    <a class="dropdown-item text-danger" href="<?= $base ?>/logout.php">
+                          <a class="dropdown-item text-danger" href="<?= $base ?>/logout.php"
+                              onclick="confirmNavigation('<?= $base ?>/logout.php'); return false;">
                         <i class="bi bi-box-arrow-left me-2"></i> Logout
                     </a>
                 </li>

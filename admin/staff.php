@@ -212,7 +212,7 @@ $actionUrl   = $base . '/actions/staff_action.php';
                                             </div>
                                         </td>
                                         <td>
-                                            <?= $u['phone'] ? htmlspecialchars($u['phone']) : '<span class="text-muted">—</span>' ?>
+                                            <?= $u['phone'] ? htmlspecialchars($u['phone']) : '<span class="text-muted">N/A</span>' ?>
                                         </td>
                                         <td>
                                             <?php if ($u['role'] === 'admin'): ?>

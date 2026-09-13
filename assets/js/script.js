@@ -248,7 +248,7 @@ function initDeleteModal() {
     <div class="modal fade" id="ecoDeleteModal" tabindex="-1"
          aria-labelledby="ecoDeleteModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" style="max-width:380px;">
-        <div class="modal-content border-0 shadow-lg overflow-hidden" style="border-radius:18px;">
+        <div class="modal-content border-0 overflow-hidden" style="border-radius:18px;">
 
           <!-- Header -->
           <div class="modal-header border-0 pb-1 px-4 pt-4">
@@ -367,6 +367,29 @@ function confirmAction(formId, message, icon, title, confirmLabel) {
         confirmLabel || 'Continue',
         'btn-danger'
     );
+}
+
+function confirmNavigation(url, message, icon, title, confirmLabel) {
+    const modalEl = document.getElementById('ecoDeleteModal');
+    const msgEl = document.getElementById('ecoDeleteModalMsg');
+    const iconEl = document.getElementById('ecoDeleteIcon');
+    const titleEl = document.getElementById('ecoDeleteModalLabel');
+    const confirmBtn = document.getElementById('ecoDeleteConfirmBtn');
+    if (!modalEl || !confirmBtn) return;
+
+    if (msgEl) msgEl.innerHTML = message || 'Are you sure you want to continue?';
+    if (iconEl) iconEl.textContent = icon || '↪';
+    if (titleEl) titleEl.textContent = title || 'Confirm Logout';
+
+    const fresh = confirmBtn.cloneNode(true);
+    fresh.className = 'btn btn-danger fw-semibold px-4 rounded-3';
+    fresh.innerHTML = `<i class="bi bi-box-arrow-right me-1"></i>${confirmLabel || 'Yes, Logout'}`;
+    confirmBtn.parentNode.replaceChild(fresh, confirmBtn);
+    fresh.addEventListener('click', () => {
+        window.location.href = url;
+    });
+
+    new bootstrap.Modal(modalEl, { backdrop: 'static', keyboard: false }).show();
 }
 
 /* Intercept legacy onsubmit="return confirm(…)" forms gracefully */

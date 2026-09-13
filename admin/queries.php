@@ -215,7 +215,7 @@ $actionUrl   = $base . '/actions/query_action.php';
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <?= $q['responder_name'] ? htmlspecialchars($q['responder_name']) : '<span class="text-muted">—</span>' ?>
+                                            <?= $q['responder_name'] ? htmlspecialchars($q['responder_name']) : '<span class="text-muted">N/A</span>' ?>
                                         </td>
                                         <td class="text-end">
                                             <button type="button" class="btn btn-sm <?= $q['status'] === 'open' ? 'btn-primary' : 'btn-outline-primary' ?>" 

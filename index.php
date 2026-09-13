@@ -40,8 +40,8 @@ $base = getBaseUrl();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="<?= $base ?>/assets/favicon.svg">
-    <meta name="description" content="EcoSprout – Sri Lanka's premier plant nursery and professional gardening services in Matara. Discover plants, book services, and join workshops.">
-    <title>EcoSprout – Plant Nursery & Gardening Services | Matara, Sri Lanka</title>
+    <meta name="description" content="EcoSprout | Sri Lanka's premier plant nursery and professional gardening services in Matara. Discover plants, book services, and join workshops.">
+    <title>EcoSprout | Plant Nursery & Gardening Services | Matara, Sri Lanka</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -86,11 +86,6 @@ $base = getBaseUrl();
 
 <!-- ══ Hero Section ════════════════════════════════════════════ -->
 <section class="hero-section" id="home">
-    <!-- Decorative floating leaves -->
-    <span class="leaf-float" style="top:10%;right:5%;"><i class="bi bi-tree-fill"></i></span>
-    <span class="leaf-float" style="top:60%;right:15%;"><i class="bi bi-flower1"></i></span>
-    <span class="leaf-float" style="bottom:15%;left:3%;"><i class="bi bi-flower2"></i></span>
-
     <div class="container hero-content">
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
@@ -104,7 +99,7 @@ $base = getBaseUrl();
                 <p class="hero-subtitle">
                     EcoSprout is your trusted plant nursery and professional gardening services partner. 
                     Discover hundreds of plant varieties, book expert gardening services, and join our 
-                    educational workshops — all in one place.
+                    educational workshops, all in one place.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     <a href="<?= $base ?>/register.php"
@@ -136,21 +131,12 @@ $base = getBaseUrl();
                 </div>
             </div>
 
-            <!-- Right: decorative plant emoji collage -->
-            <div class="col-lg-6 d-none d-lg-flex justify-content-center">
-                <div style="position:relative;width:420px;height:420px;">
-                    <!-- Central circle -->
-                    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-                                width:300px;height:300px;border-radius:50%;
-                                background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.2);
-                                display:flex;align-items:center;justify-content:center;font-size:8rem;">
-                        🌿
-                    </div>
-                    <!-- Orbiting elements -->
-                    <div style="position:absolute;top:10%;left:10%;font-size:3.5rem;animation:floatLeaf 5s ease-in-out infinite;">🌺</div>
-                    <div style="position:absolute;top:10%;right:10%;font-size:3rem;animation:floatLeaf 7s ease-in-out infinite 1s;">🌱</div>
-                    <div style="position:absolute;bottom:10%;left:15%;font-size:3rem;animation:floatLeaf 6s ease-in-out infinite 2s;">🌻</div>
-                    <div style="position:absolute;bottom:10%;right:15%;font-size:3.5rem;animation:floatLeaf 8s ease-in-out infinite 0.5s;">🪴</div>
+            <!-- Right: featured hero plant -->
+            <div class="col-lg-6 d-flex justify-content-center">
+                <div class="hero-plant-stage">
+                    <img src="<?= $base ?>/assets/images/plants/hero.png"
+                         alt="Bonsai plant in a decorative pot"
+                         class="hero-plant-image">
                 </div>
             </div>
         </div>
@@ -263,7 +249,7 @@ $base = getBaseUrl();
                 <div class="service-card">
                     <div class="service-icon"><i class="bi bi-scissors"></i></div>
                     <h5>Pruning &amp; Maintenance</h5>
-                    <p class="text-muted small">Regular monthly upkeep — weeding, pruning, fertilizing, and pest management to keep your garden pristine.</p>
+                    <p class="text-muted small">Regular monthly upkeep: weeding, pruning, fertilizing, and pest management to keep your garden pristine.</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -352,25 +338,25 @@ $base = getBaseUrl();
 <section class="py-5" style="background:linear-gradient(135deg,var(--eco-primary-dark),var(--eco-primary));">
     <div class="container text-center text-white">
         <h2 class="fw-bold mb-2" style="color:#fff;">Why Choose EcoSprout?</h2>
-        <p class="mb-5" style="color:rgba(255,255,255,0.75);">Everything you need for a thriving garden — in one trusted platform</p>
+        <p class="mb-5" style="color:rgba(255,255,255,0.75);">Everything you need for a thriving garden in one trusted platform</p>
         <div class="row g-4">
             <div class="col-md-3">
-                <div class="fs-2 mb-2">🌿</div>
+                <div class="why-icon fs-2 mb-2"><i class="bi bi-tree-fill"></i></div>
                 <h6 class="fw-bold text-white">100% Locally Grown</h6>
                 <p class="small" style="color:rgba(255,255,255,0.7);">All plants are locally sourced and acclimatised to Sri Lanka's climate.</p>
             </div>
             <div class="col-md-3">
-                <div class="fs-2 mb-2">👨‍🌾</div>
+                <div class="why-icon fs-2 mb-2"><i class="bi bi-people-fill"></i></div>
                 <h6 class="fw-bold text-white">Expert Team</h6>
                 <p class="small" style="color:rgba(255,255,255,0.7);">Our horticulturists have 10+ years of experience in tropical plant care.</p>
             </div>
             <div class="col-md-3">
-                <div class="fs-2 mb-2">♻️</div>
+                <div class="why-icon fs-2 mb-2"><i class="bi bi-recycle"></i></div>
                 <h6 class="fw-bold text-white">Eco-Friendly</h6>
                 <p class="small" style="color:rgba(255,255,255,0.7);">We use organic fertilizers and sustainable practices in everything we do.</p>
             </div>
             <div class="col-md-3">
-                <div class="fs-2 mb-2">💬</div>
+                <div class="why-icon fs-2 mb-2"><i class="bi bi-chat-dots-fill"></i></div>
                 <h6 class="fw-bold text-white">Ongoing Support</h6>
                 <p class="small" style="color:rgba(255,255,255,0.7);">Submit plant-care queries and get responses from our expert team.</p>
             </div>
@@ -470,7 +456,7 @@ $base = getBaseUrl();
                     </li>
                     <li class="mb-2">
                         <i class="bi bi-clock-fill me-2" style="color:var(--eco-accent);"></i>
-                        Mon–Sat: 7:00 AM – 6:00 PM
+                        Mon to Sat: 7:00 AM to 6:00 PM
                     </li>
                 </ul>
             </div>

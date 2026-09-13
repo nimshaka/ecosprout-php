@@ -134,7 +134,7 @@ $actionUrl   = $base . '/actions/plant_action.php';
                                         <?php endif; ?>
                                     </td>
                                     <td class="fw-semibold"><?= htmlspecialchars($p['plant_name']) ?></td>
-                                    <td><em class="text-muted"><?= htmlspecialchars($p['botanical_name'] ?? '—') ?></em></td>
+                                    <td><em class="text-muted"><?= htmlspecialchars($p['botanical_name'] ?? 'N/A') ?></em></td>
                                     <td><?= categoryBadge($p['category']) ?></td>
                                     <td><?= formatLKR($p['price']) ?></td>
                                     <td>

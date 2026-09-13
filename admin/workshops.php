@@ -439,7 +439,7 @@ function showAttendees(wsId, wsTitle, attendees) {
                 <td>${idx + 1}</td>
                 <td class="fw-bold">${escapeHtml(att.full_name)}</td>
                 <td>${escapeHtml(att.email)}</td>
-                <td>${att.phone ? escapeHtml(att.phone) : '—'}</td>
+                <td>${att.phone ? escapeHtml(att.phone) : 'N/A'}</td>
                 <td class="text-muted small">${escapeHtml(att.registered_at)}</td>
             `;
             tbody.appendChild(tr);

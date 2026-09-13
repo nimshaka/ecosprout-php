@@ -6,7 +6,7 @@
  */
 function renderHead(string $pageTitle = 'EcoSprout'): void
 {
-    $title = ($pageTitle !== 'EcoSprout') ? $pageTitle . ' | EcoSprout' : 'EcoSprout – Plant Nursery & Gardening Services';
+    $title = ($pageTitle !== 'EcoSprout') ? $pageTitle . ' | EcoSprout' : 'EcoSprout | Plant Nursery & Gardening Services';
     $base = function_exists('getBaseUrl') ? getBaseUrl() : (defined('BASE_URL') ? BASE_URL : '/EcoSprout');
     ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ function renderHead(string $pageTitle = 'EcoSprout'): void
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="<?= $base ?>/assets/favicon.svg">
-    <meta name="description" content="EcoSprout – Your premier plant nursery and gardening services in Matara, Sri Lanka. Discover plants, book services, and join workshops.">
+    <meta name="description" content="EcoSprout | Your premier plant nursery and gardening services in Matara, Sri Lanka. Discover plants, book services, and join workshops.">
     <title><?= htmlspecialchars($title) ?></title>
 
     <!-- Bootstrap 5.3 CSS -->

@@ -168,7 +168,8 @@ $base = function_exists('getBaseUrl') ? getBaseUrl() : (defined('BASE_URL') ? BA
 
     <!-- Logout at the bottom -->
     <div class="sidebar-footer">
-        <a href="<?= $base ?>/logout.php" class="sidebar-logout-btn">
+          <a href="<?= $base ?>/logout.php" class="sidebar-logout-btn"
+              onclick="confirmNavigation('<?= $base ?>/logout.php'); return false;">
             <i class="bi bi-box-arrow-left me-2"></i> Logout
         </a>
     </div>

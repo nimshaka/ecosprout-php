@@ -59,7 +59,7 @@ $base = getBaseUrl();
                        placeholder="Your full name"
                        value="<?= htmlspecialchars($_SESSION['reg_old']['full_name'] ?? '') ?>"
                        required minlength="2" maxlength="120">
-                <div class="invalid-feedback">Full name is required (2–120 characters).</div>
+                <div class="invalid-feedback">Full name is required (2 to 120 characters).</div>
             </div>
 
             <!-- Email -->

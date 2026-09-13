@@ -3,15 +3,14 @@
  * EcoSprout – Database Configuration
  * Uses PDO with prepared statements for all database operations.
  *
- * ASSUMPTION: Running on a localhost XAMPP/WAMP/Laragon stack.
- * Update DB_HOST, DB_USER, DB_PASS if your environment differs.
+ * LIVE VERSION — running on InfinityFree hosting.
  */
 
 // ── Database credentials ──────────────────────────────────────
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'ecosprout');
-define('DB_USER', 'root');   // Change to your MySQL username
-define('DB_PASS', '');        // Change to your MySQL password
+define('DB_HOST', 'sql109.infinityfree.com');
+define('DB_NAME', 'if0_42905157_ecosprout');
+define('DB_USER', 'if0_42905157');
+define('DB_PASS', 'rOoIM0oONl0J');
 define('DB_CHARSET', 'utf8mb4');
 
 /**

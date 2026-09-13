@@ -25,6 +25,13 @@ $stmt = $pdo->query("SELECT id, plant_name, botanical_name, category, price, sto
                      FROM plants ORDER BY RAND() LIMIT 8");
 $featuredPlants = $stmt->fetchAll();
 
+$workshopStmt = $pdo->query("SELECT id, title, description, schedule_date, fee
+                             FROM workshops
+                             WHERE schedule_date >= NOW()
+                             ORDER BY schedule_date ASC
+                             LIMIT 3");
+$upcomingWorkshops = $workshopStmt->fetchAll();
+
 $base = getBaseUrl();
 ?>
 <!DOCTYPE html>
@@ -310,30 +317,26 @@ $base = getBaseUrl();
             <p class="text-muted">Hands-on learning experiences led by expert horticulturists</p>
         </div>
         <div class="row g-4 justify-content-center">
-            <div class="col-md-4">
-                <div class="eco-card text-center p-4">
-                    <div class="fs-1 mb-3">🌱</div>
-                    <h5 class="fw-bold">Introduction to Home Gardening</h5>
-                    <p class="text-muted small">Perfect for beginners — soil prep, seed planting, and basic plant care. Starter plant kit included!</p>
-                    <span class="badge bg-success">LKR 500</span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="eco-card text-center p-4">
-                    <div class="fs-1 mb-3">🌺</div>
-                    <h5 class="fw-bold">Tropical Plant Care Masterclass</h5>
-                    <p class="text-muted small">Intermediate workshop on caring for Sri Lanka's native tropical plants. Pruning, fertilizing, pest ID.</p>
-                    <span class="badge bg-success">LKR 750</span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="eco-card text-center p-4">
-                    <div class="fs-1 mb-3">🥦</div>
-                    <h5 class="fw-bold">Kitchen Garden &amp; Edible Plants</h5>
-                    <p class="text-muted small">Grow your own food! Herbs, vegetables, and fruits for small home gardens in Sri Lanka.</p>
-                    <span class="badge bg-success">LKR 600</span>
-                </div>
-            </div>
+            <?php if (empty($upcomingWorkshops)): ?>
+                <div class="col-12 text-center text-muted py-4">New workshops will be announced soon.</div>
+            <?php else: ?>
+                <?php foreach ($upcomingWorkshops as $workshop): ?>
+                    <div class="col-md-4">
+                        <div class="eco-card text-center p-4 h-100">
+                            <div class="fs-1 mb-3">🌱</div>
+                            <h5 class="fw-bold"><?= htmlspecialchars($workshop['title']) ?></h5>
+                            <p class="text-muted small"><?= nl2br(htmlspecialchars($workshop['description'] ?? 'Join us for a practical gardening workshop.')) ?></p>
+                            <p class="small mb-2">
+                                <i class="bi bi-calendar-event me-1 text-success"></i>
+                                <?= date('M d, Y h:i A', strtotime($workshop['schedule_date'])) ?>
+                            </p>
+                            <span class="badge bg-success">
+                                <?= (float)$workshop['fee'] > 0 ? formatLKR((float)$workshop['fee']) : 'Free' ?>
+                            </span>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
         <div class="text-center mt-4">
             <a href="<?= $base ?>/register.php" class="btn btn-eco-primary px-4">

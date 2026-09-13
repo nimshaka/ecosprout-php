@@ -85,8 +85,8 @@ $activePage  = 'dashboard';
                         <span class="badge bg-success-subtle text-success-emphasis rounded-pill px-3 py-2 mb-2">
                             <i class="bi bi-sprout me-1"></i> Plant Lover Portal
                         </span>
-                        <h2 class="fw-bold mb-2">Ayubowan, <?= htmlspecialchars($user['full_name'] ?? 'Friend') ?>! 🌱</h2>
-                        <p class="text-white-50 mb-3">
+                        <h2 class="customer-hero-title fw-bold mb-2">Ayubowan, <?= htmlspecialchars($user['full_name'] ?? 'Friend') ?>! 🌱</h2>
+                        <p class="customer-hero-description mb-3">
                             Welcome to your personal gardening sanctuary. Discover lush botanical additions for your home, review your delivery orders, or consult our nursery horticulturalists.
                         </p>
                         <div class="d-flex flex-wrap gap-2">

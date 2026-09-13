@@ -44,6 +44,9 @@ function handlePlantImageUpload(): ?string
     if ($file['error'] !== UPLOAD_ERR_OK) {
         throw new RuntimeException('Image upload failed (error code: ' . $file['error'] . ').');
     }
+    if (!is_uploaded_file($file['tmp_name'])) {
+        throw new RuntimeException('The uploaded image could not be read by the server.');
+    }
     if ($file['size'] > $maxSize) {
         throw new RuntimeException('Image must be smaller than 2 MB.');
     }
@@ -58,16 +61,23 @@ function handlePlantImageUpload(): ?string
     }
 
     $ext      = $extMap[$mimeType];
-    $filename = uniqid('plant_', true) . '.' . $ext;
-    $dest     = __DIR__ . '/../assets/images/plants/' . $filename;
+    $filename = 'plant_' . bin2hex(random_bytes(16)) . '.' . $ext;
+    $uploadDir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'plants';
+    $dest = $uploadDir . DIRECTORY_SEPARATOR . $filename;
 
     // Ensure directory exists
-    if (!is_dir(dirname($dest))) {
-        mkdir(dirname($dest), 0755, true);
+    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) {
+        throw new RuntimeException('The plant image directory could not be created.');
+    }
+    if (!is_writable($uploadDir)) {
+        throw new RuntimeException('The plant image directory is not writable by PHP.');
     }
 
     if (!move_uploaded_file($file['tmp_name'], $dest)) {
         throw new RuntimeException('Could not save the uploaded image.');
+    }
+    if (!is_file($dest)) {
+        throw new RuntimeException('The uploaded image was not saved correctly.');
     }
 
     return $filename;

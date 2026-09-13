@@ -236,11 +236,18 @@ $actionUrl   = $base . '/actions/staff_action.php';
                                             <div class="d-flex justify-content-end gap-1">
                                                 <?php if ((int)$u['id'] !== (int)$adminId): ?>
                                                     <!-- Toggle Status Form -->
-                                                    <form method="POST" action="<?= $actionUrl ?>" class="d-inline" onsubmit="return confirm('Toggle status for this user?');">
+                                                    <?php
+                                                        $statusAction = ($u['status'] ?? 'enabled') === 'enabled' ? 'Disable Account' : 'Enable Account';
+                                                        $statusMessage = ($u['status'] ?? 'enabled') === 'enabled'
+                                                            ? 'Are you sure you want to disable this user account?'
+                                                            : 'Are you sure you want to enable this user account?';
+                                                    ?>
+                                                    <form method="POST" action="<?= $actionUrl ?>" class="d-inline" id="status-usr-<?= (int)$u['id'] ?>">
                                                         <?= csrfField() ?>
                                                         <input type="hidden" name="action" value="toggle_status">
                                                         <input type="hidden" name="user_id" value="<?= (int)$u['id'] ?>">
-                                                        <button type="submit" class="btn btn-sm btn-outline-<?= ($u['status'] ?? 'enabled') === 'enabled' ? 'warning' : 'success' ?>" title="<?= ($u['status'] ?? 'enabled') === 'enabled' ? 'Disable Account' : 'Enable Account' ?>">
+                                                        <button type="button" class="btn btn-sm btn-outline-<?= ($u['status'] ?? 'enabled') === 'enabled' ? 'warning' : 'success' ?>" title="<?= $statusAction ?>"
+                                                            onclick="confirmAction('status-usr-<?= (int)$u['id'] ?>', '<?= htmlspecialchars($statusMessage, ENT_QUOTES) ?>', '⚙️', 'Confirm Status Change', 'Yes, <?= $statusAction ?>')">
                                                             <i class="bi bi-<?= ($u['status'] ?? 'enabled') === 'enabled' ? 'slash-circle' : 'check-circle' ?>"></i>
                                                         </button>
                                                     </form>

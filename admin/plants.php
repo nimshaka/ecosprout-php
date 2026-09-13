@@ -190,6 +190,7 @@ $actionUrl   = $base . '/actions/plant_action.php';
             <form method="POST" action="<?= $actionUrl ?>" enctype="multipart/form-data" class="needs-validation" novalidate>
                 <?php csrfField(); ?>
                 <input type="hidden" name="action" value="create">
+                <?php $plantFormId = 'addPlant'; ?>
                 <?php include __DIR__ . '/../includes/plant_form_fields.php'; ?>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -212,6 +213,7 @@ $actionUrl   = $base . '/actions/plant_action.php';
                 <?php csrfField(); ?>
                 <input type="hidden" name="action" value="update">
                 <input type="hidden" name="plant_id" id="editPlantId">
+                <?php $plantFormId = 'editPlant'; ?>
                 <?php include __DIR__ . '/../includes/plant_form_fields.php'; ?>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -227,6 +229,15 @@ $actionUrl   = $base . '/actions/plant_action.php';
 <script>
 function openEditPlant(plant) {
     const modal = document.getElementById('editPlantModal');
+    const imageInput = modal.querySelector('#editPlantImageInput');
+    const preview = modal.querySelector('#editPlantImagePreview');
+    const previewWrap = modal.querySelector('#editPlantImagePreviewWrap');
+    const fileName = modal.querySelector('#editPlantImageFileName');
+    const imageUrl = modal.querySelector('#editPlantImageUrl');
+    const removeBtn = modal.querySelector('#editPlantRemoveImageBtn');
+    const removeFlag = modal.querySelector('#editPlantRemoveImageFlag');
+    const currentBadge = modal.querySelector('#editPlantCurrentImageBadge');
+
     document.getElementById('editPlantId').value = plant.id;
     modal.querySelector('[name="plant_name"]').value        = plant.plant_name || '';
     modal.querySelector('[name="botanical_name"]').value    = plant.botanical_name || '';
@@ -236,11 +247,23 @@ function openEditPlant(plant) {
     modal.querySelector('[name="price"]').value             = plant.price || '0.00';
     modal.querySelector('[name="stock_quantity"]').value    = plant.stock_quantity || '0';
 
-    // Show existing image if available
-    const preview = modal.querySelector('#plantImagePreview');
+    if (imageInput) imageInput.value = '';
+    if (removeFlag) removeFlag.value = '0';
+    if (imageUrl) { imageUrl.href = '#'; imageUrl.classList.add('d-none'); }
     if (preview && plant.image) {
-        preview.src = '<?= $base ?>/assets/images/plants/' + plant.image;
-        preview.classList.remove('d-none');
+        const imagePath = '<?= $base ?>/assets/images/plants/' + encodeURIComponent(plant.image);
+        preview.src = imagePath;
+        if (imageUrl) { imageUrl.href = imagePath; imageUrl.classList.remove('d-none'); }
+        if (previewWrap) previewWrap.classList.remove('d-none');
+        if (fileName) fileName.textContent = 'Current image';
+        if (removeBtn) removeBtn.classList.remove('d-none');
+        if (currentBadge) currentBadge.classList.remove('d-none');
+    } else {
+        if (preview) preview.src = '';
+        if (previewWrap) previewWrap.classList.add('d-none');
+        if (fileName) fileName.textContent = '';
+        if (removeBtn) removeBtn.classList.add('d-none');
+        if (currentBadge) currentBadge.classList.add('d-none');
     }
 
     new bootstrap.Modal(modal).show();

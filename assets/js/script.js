@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initImagePreview();
     initFormValidation();
     initTableSearch();
+    initTablePagination();
     initDeleteModal();        // must run last (builds modal DOM)
 });
 
@@ -82,20 +83,20 @@ function initFlashAutoDismiss() {
    Plant Image Preview + Remove Button
    ══════════════════════════════════════════════════════════════ */
 function initImagePreview() {
-    const imageInput   = document.getElementById('plantImageInput');
-    if (!imageInput) return;
+    document.querySelectorAll('input[type="file"][name="image"]').forEach(imageInput => {
+        const form = imageInput.closest('form');
+        if (!form) return;
+        const preview = form.querySelector('[id$="ImagePreview"]');
+        const previewWrap = form.querySelector('[id$="ImagePreviewWrap"]');
+        const fileNameEl = form.querySelector('[id$="ImageFileName"]');
+        const imageUrl = form.querySelector('[id$="ImageUrl"]');
+        const removeBtn = form.querySelector('[id$="RemoveImageBtn"]');
+        const removeFlag = form.querySelector('[id$="RemoveImageFlag"]');
+        const currentBadge = form.querySelector('[id$="CurrentImageBadge"]');
 
-    const preview      = document.getElementById('plantImagePreview');
-    const previewWrap  = document.getElementById('plantImagePreviewWrap');
-    const fileNameEl   = document.getElementById('plantImageFileName');
-    const removeBtn    = document.getElementById('removeImageBtn');
-    const removeFlag   = document.getElementById('removeImageFlag');
-    const currentBadge = document.getElementById('currentImageBadge');
-
-    /* ── File chosen ── */
-    imageInput.addEventListener('change', () => {
+        imageInput.addEventListener('change', () => {
         const file = imageInput.files[0];
-        if (!file) { _resetImagePreview(); return; }
+        if (!file) { _resetImagePreview(form); return; }
 
         // Client-side type check
         if (!['image/jpeg','image/png','image/gif','image/webp'].includes(file.type)) {
@@ -113,6 +114,7 @@ function initImagePreview() {
         const reader = new FileReader();
         reader.onload = (e) => {
             if (preview)     { preview.src = e.target.result; }
+            if (imageUrl)    { imageUrl.href = e.target.result; imageUrl.classList.remove('d-none'); }
             if (previewWrap) { previewWrap.classList.remove('d-none'); }
             if (fileNameEl)  { fileNameEl.textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`; }
             if (removeBtn)   { removeBtn.classList.remove('d-none'); }
@@ -120,29 +122,33 @@ function initImagePreview() {
             if (currentBadge){ currentBadge.classList.add('d-none'); }
         };
         reader.readAsDataURL(file);
-    });
+        });
 
-    /* ── Remove button ── */
-    if (removeBtn) {
+        if (removeBtn) {
         removeBtn.addEventListener('click', () => {
             imageInput.value = '';
-            _resetImagePreview();
+            _resetImagePreview(form);
             if (removeFlag)  { removeFlag.value = '1'; }   // tell server to clear image
             if (currentBadge){ currentBadge.classList.add('d-none'); }
             showToast('Image removed. Save the form to apply changes.', 'info');
         });
-    }
+        }
+    });
 }
 
-function _resetImagePreview() {
-    const preview     = document.getElementById('plantImagePreview');
-    const previewWrap = document.getElementById('plantImagePreviewWrap');
-    const removeBtn   = document.getElementById('removeImageBtn');
-    const removeFlag  = document.getElementById('removeImageFlag');
+function _resetImagePreview(form) {
+    const preview = form.querySelector('[id$="ImagePreview"]');
+    const previewWrap = form.querySelector('[id$="ImagePreviewWrap"]');
+    const removeBtn = form.querySelector('[id$="RemoveImageBtn"]');
+    const removeFlag = form.querySelector('[id$="RemoveImageFlag"]');
+    const imageUrl = form.querySelector('[id$="ImageUrl"]');
+    const currentBadge = form.querySelector('[id$="CurrentImageBadge"]');
     if (preview)     { preview.src = ''; }
     if (previewWrap) { previewWrap.classList.add('d-none'); }
     if (removeBtn)   { removeBtn.classList.add('d-none'); }
     if (removeFlag)  { removeFlag.value = '0'; }
+    if (imageUrl)    { imageUrl.href = '#'; imageUrl.classList.add('d-none'); }
+    if (currentBadge){ currentBadge.classList.add('d-none'); }
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -172,7 +178,47 @@ function initTableSearch() {
         document.querySelectorAll('.searchable-row').forEach(row => {
             row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
         });
+        window.ecoRefreshTablePagination?.(true);
     });
+}
+
+function initTablePagination() {
+    const pageSize = 10;
+    const paginators = [];
+    document.querySelectorAll('table').forEach(table => {
+        const body = table.querySelector('tbody');
+        const rows = body ? Array.from(body.querySelectorAll(':scope > tr')) : [];
+        if (!body || rows.length <= pageSize) return;
+        const container = table.closest('.eco-table-wrap, .table-responsive') || table.parentElement;
+        const nav = document.createElement('nav');
+        nav.className = 'eco-pagination mt-3';
+        nav.setAttribute('aria-label', 'Table pagination');
+        container.insertAdjacentElement('afterend', nav);
+        const paginator = { page: 1, rows, nav };
+        const render = (reset = false) => {
+            if (reset) paginator.page = 1;
+            const visible = rows.filter(row => row.style.display !== 'none');
+            const totalPages = Math.max(1, Math.ceil(visible.length / pageSize));
+            paginator.page = Math.min(paginator.page, totalPages);
+            rows.forEach(row => { row.hidden = true; });
+            visible.slice((paginator.page - 1) * pageSize, paginator.page * pageSize).forEach(row => { row.hidden = false; });
+            if (visible.length === 0 || totalPages <= 1) { nav.innerHTML = ''; return; }
+            const items = [];
+            const add = (label, page, disabled = false, active = false) => items.push(`<li class="page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}"><button type="button" class="page-link" data-page="${page}"${disabled ? ' disabled' : ''}>${label}</button></li>`);
+            add('&laquo; Prev', paginator.page - 1, paginator.page === 1);
+            for (let page = 1; page <= totalPages; page += 1) {
+                if (totalPages <= 7 || page === 1 || page === totalPages || Math.abs(page - paginator.page) <= 1) add(page, page, false, page === paginator.page);
+                else if (page === 2 || page === totalPages - 1) items.push('<li class="page-item disabled"><span class="page-link">&hellip;</span></li>');
+            }
+            add('Next &raquo;', paginator.page + 1, paginator.page === totalPages);
+            nav.innerHTML = `<ul class="pagination pagination-sm justify-content-end mb-0">${items.join('')}</ul>`;
+            nav.querySelectorAll('[data-page]').forEach(button => button.addEventListener('click', () => { paginator.page = Number(button.dataset.page); render(); }));
+        };
+        paginator.render = render;
+        paginators.push(paginator);
+        render();
+    });
+    window.ecoRefreshTablePagination = reset => paginators.forEach(paginator => paginator.render(reset));
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -278,18 +324,22 @@ function initDeleteModal() {
 }
 
 /* Internal: show the modal for a given form ID */
-function _showDeleteModal(formId, message, icon) {
+function _showDeleteModal(formId, message, icon, title, confirmLabel, confirmClass) {
     const modalEl    = document.getElementById('ecoDeleteModal');
     const msgEl      = document.getElementById('ecoDeleteModalMsg');
     const iconEl     = document.getElementById('ecoDeleteIcon');
+    const titleEl    = document.getElementById('ecoDeleteModalLabel');
     const confirmBtn = document.getElementById('ecoDeleteConfirmBtn');
     if (!modalEl) return;
 
     if (msgEl)  msgEl.innerHTML = message;
     if (iconEl) iconEl.textContent = icon || '🗑️';
+    if (titleEl) titleEl.textContent = title || 'Confirm Delete';
 
     // Swap confirm button to wipe stale listeners
     const fresh = confirmBtn.cloneNode(true);
+    fresh.className = `btn ${confirmClass || 'btn-danger'} fw-semibold px-4 rounded-3`;
+    fresh.innerHTML = `<i class="bi bi-check-lg me-1"></i>${confirmLabel || 'Yes, Delete'}`;
     confirmBtn.parentNode.replaceChild(fresh, confirmBtn);
     fresh.addEventListener('click', () => {
         bootstrap.Modal.getInstance(modalEl)?.hide();
@@ -304,8 +354,12 @@ function confirmDelete(formId, message, icon) {
     _showDeleteModal(
         formId,
         message || 'Are you sure you want to <strong>permanently delete</strong> this record?<br><span class="text-danger small">This cannot be undone.</span>',
-        icon    || '🗑️'
+        icon    || '🗑️', 'Confirm Delete', 'Yes, Delete', 'btn-danger'
     );
+}
+
+function confirmAction(formId, message, icon, title, confirmLabel) {
+    _showDeleteModal(formId, message || 'Are you sure you want to continue?', icon || '⚙️', title || 'Confirm Action', confirmLabel || 'Continue', 'btn-danger');
 }
 
 /* Intercept legacy onsubmit="return confirm(…)" forms gracefully */

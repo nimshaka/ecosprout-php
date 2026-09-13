@@ -384,6 +384,13 @@ a:hover { color: var(--eco-primary-light); }
 .eco-table tbody tr { transition: background 0.15s; }
 .eco-table tbody tr:hover { background: var(--eco-gray-50); }
 
+.eco-pagination .page-link { min-width: 2.25rem; text-align: center; }
+.eco-pagination .page-item:first-child .page-link,
+.eco-pagination .page-item:last-child .page-link { min-width: auto; }
+
+.customer-hero-title { color: #f4fff8; }
+.customer-hero-description { color: #d8f3e3; }
+
 .low-stock { background: #fff8e1 !important; }
 .low-stock:hover { background: #fff3cd !important; }
 
@@ -428,6 +435,26 @@ a:hover { color: var(--eco-primary-light); }
     border-radius: var(--border-radius);
     border: none;
     box-shadow: var(--shadow-lg);
+}
+
+.modal-dialog-scrollable .modal-content { max-height: calc(100vh - 2rem); }
+.modal-dialog-scrollable .modal-content > form {
+    flex: 1 1 auto;
+    height: calc(100vh - 7rem);
+    max-height: calc(100vh - 7rem);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.modal-dialog-scrollable .modal-body { overflow-y: auto; min-height: 0; flex: 1 1 auto; }
+
+@media (max-width: 576px) {
+    .modal-dialog-scrollable .modal-content { max-height: calc(100vh - 1rem); }
+    .modal-dialog-scrollable .modal-content > form {
+        height: calc(100vh - 5rem);
+        max-height: calc(100vh - 5rem);
+    }
 }
 
 /* ── Alerts ──────────────────────────────────────────────────── */

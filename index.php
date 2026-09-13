@@ -180,7 +180,7 @@ $base = getBaseUrl();
             </div>
             <div class="col-6 col-md-3">
                 <div class="feature-item justify-content-center">
-                    <i class="bi bi-leaf fs-5"></i>
+                    <i class="bi bi-recycle fs-5" aria-hidden="true"></i>
                     <span>Eco-Friendly Practices</span>
                 </div>
             </div>

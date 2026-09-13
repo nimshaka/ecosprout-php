@@ -108,7 +108,7 @@ $orderAction = $base . '/actions/order_action.php';
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label fw-semibold">Delivery Address / Nursery Pickup Instructions</label>
-                                        <textarea rows="3" class="form-control" placeholder="House / street address, Kegalle landmark, or indicate 'Nursery Counter Pickup'...">Kegalle Town Delivery or EcoSprout Nursery Counter Pickup</textarea>
+                                        <textarea rows="3" class="form-control" placeholder="House / street address, Matara landmark, or indicate 'Nursery Counter Pickup'...">Matara Town Delivery or EcoSprout Nursery Counter Pickup</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@ $orderAction = $base . '/actions/order_action.php';
                                     <input class="form-check-input ms-0 me-3" type="radio" name="payment_method" id="pay2" value="cod">
                                     <label class="form-check-label fw-semibold" for="pay2">
                                         <i class="bi bi-cash-coin me-1 text-success"></i> Cash on Delivery / Counter Settlement
-                                        <div class="text-muted fw-normal small">Pay cash upon receiving plants at your doorstep in Kegalle.</div>
+                                        <div class="text-muted fw-normal small">Pay cash upon receiving plants at your doorstep in Matara.</div>
                                     </label>
                                 </div>
                             </div>
@@ -176,7 +176,7 @@ $orderAction = $base . '/actions/order_action.php';
                                 </div>
                                 <div class="d-flex justify-content-between mb-2">
                                     <span class="text-muted">Delivery</span>
-                                    <span class="text-success fw-semibold">FREE (Kegalle)</span>
+                                    <span class="text-success fw-semibold">FREE (Matara)</span>
                                 </div>
                                 <hr>
                                 <div class="d-flex justify-content-between align-items-center mb-4">

@@ -84,7 +84,7 @@ $wsAction    = $base . '/actions/workshop_action.php';
                             <div class="card-body">
                                 <i class="bi bi-calendar-x display-4 text-muted mb-3 d-block"></i>
                                 <h5>No Workshops Currently Scheduled</h5>
-                                <p class="text-muted">Check back soon for new hands-on sessions at our Kegalle nursery.</p>
+                                <p class="text-muted">Check back soon for new hands-on sessions at our Matara nursery.</p>
                             </div>
                         </div>
                     <?php else: ?>
@@ -132,7 +132,7 @@ $wsAction    = $base . '/actions/workshop_action.php';
                                                     </div>
                                                     <div class="col-6">
                                                         <i class="bi bi-geo-alt text-danger me-1"></i>
-                                                        EcoSprout Nursery, Kegalle
+                                                        EcoSprout Nursery, Matara
                                                     </div>
                                                     <div class="col-6">
                                                         <i class="bi bi-people text-info me-1"></i>
@@ -146,11 +146,12 @@ $wsAction    = $base . '/actions/workshop_action.php';
                                                 <?php if ($isPast): ?>
                                                     <button class="btn btn-secondary btn-sm w-100 disabled" disabled>Event Concluded</button>
                                                 <?php elseif ($isRegistered): ?>
-                                                    <form method="POST" action="<?= $wsAction ?>" onsubmit="return confirm('Unregister from this workshop?');">
+                                                    <form method="POST" action="<?= $wsAction ?>" id="unregisterWorkshop-<?= (int)$ws['id'] ?>">
                                                         <?= csrfField() ?>
                                                         <input type="hidden" name="action" value="unregister">
                                                         <input type="hidden" name="workshop_id" value="<?= (int)$ws['id'] ?>">
-                                                        <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                                        <button type="button" class="btn btn-outline-danger btn-sm w-100"
+                                                            onclick="confirmAction('unregisterWorkshop-<?= (int)$ws['id'] ?>', 'Unregister from this workshop?', '📅', 'Cancel Workshop Registration', 'Yes, Unregister')">
                                                             <i class="bi bi-x-circle me-1"></i> Cancel Registration
                                                         </button>
                                                     </form>
@@ -207,11 +208,12 @@ $wsAction    = $base . '/actions/workshop_action.php';
                                                     <div class="col-6"><i class="bi bi-clock text-primary me-1"></i><strong><?= date('h:i A', strtotime($mws['schedule_date'])) ?></strong></div>
                                                 </div>
                                             </div>
-                                            <form method="POST" action="<?= $wsAction ?>" onsubmit="return confirm('Cancel your registration?');">
+                                            <form method="POST" action="<?= $wsAction ?>" id="cancelWorkshop-<?= (int)$mws['id'] ?>">
                                                 <?= csrfField() ?>
                                                 <input type="hidden" name="action" value="unregister">
                                                 <input type="hidden" name="workshop_id" value="<?= (int)$mws['id'] ?>">
-                                                <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                                <button type="button" class="btn btn-outline-danger btn-sm w-100"
+                                                    onclick="confirmAction('cancelWorkshop-<?= (int)$mws['id'] ?>', 'Cancel your registration for this workshop?', '📅', 'Cancel Workshop Registration', 'Yes, Cancel Registration')">
                                                     <i class="bi bi-x-circle me-1"></i> Cancel Registration
                                                 </button>
                                             </form>

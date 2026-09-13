@@ -55,6 +55,7 @@ $cartAction  = $base . '/actions/cart_action.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= $base ?>/assets/css/style.css">
+        <link rel="icon" type="image/svg+xml" href="<?= $base ?>/assets/favicon.svg">
 </head>
 <body>
 <div class="app-wrapper">
@@ -73,10 +74,11 @@ $cartAction  = $base . '/actions/cart_action.php';
                     <p class="text-muted mb-0">Review selected potted saplings, update pot quantities, and verify order totals.</p>
                 </div>
                 <?php if (!empty($cartItems)): ?>
-                    <form method="POST" action="<?= $cartAction ?>" onsubmit="return confirm('Clear all items from your cart?');">
+                    <form method="POST" action="<?= $cartAction ?>" id="clearCartForm">
                         <?= csrfField() ?>
                         <input type="hidden" name="action" value="clear">
-                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                        <button type="button" class="btn btn-outline-danger btn-sm"
+                            onclick="confirmAction('clearCartForm', 'Clear all items from your cart?', '🛒', 'Clear Cart', 'Yes, Empty Cart')">
                             <i class="bi bi-trash3 me-1"></i> Empty Cart
                         </button>
                     </form>
@@ -153,11 +155,12 @@ $cartAction  = $base . '/actions/cart_action.php';
                                                     <?= formatLKR($item['subtotal']) ?>
                                                 </td>
                                                 <td class="text-end">
-                                                    <form method="POST" action="<?= $cartAction ?>" class="d-inline" onsubmit="return confirm('Remove this plant from cart?');">
+                                                    <form method="POST" action="<?= $cartAction ?>" class="d-inline" id="removeCartItem-<?= (int)$p['id'] ?>">
                                                         <?= csrfField() ?>
                                                         <input type="hidden" name="action" value="remove">
                                                         <input type="hidden" name="plant_id" value="<?= (int)$p['id'] ?>">
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger border-0">
+                                                        <button type="button" class="btn btn-sm btn-outline-danger border-0"
+                                                            onclick="confirmAction('removeCartItem-<?= (int)$p['id'] ?>', 'Remove this plant from your cart?', '🛒', 'Remove Cart Item', 'Yes, Remove')">
                                                             <i class="bi bi-x-circle fs-5"></i>
                                                         </button>
                                                     </form>
@@ -191,7 +194,7 @@ $cartAction  = $base . '/actions/cart_action.php';
                                     <span class="text-success fw-semibold">FREE Eco-Wrap</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-3">
-                                    <span class="text-muted">Local Delivery (Kegalle)</span>
+                                    <span class="text-muted">Local Delivery (Matara)</span>
                                     <span class="text-success fw-semibold">Complimentary</span>
                                 </div>
                                 <hr>

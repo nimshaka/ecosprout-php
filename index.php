@@ -39,8 +39,9 @@ $base = getBaseUrl();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="EcoSprout – Sri Lanka's premier plant nursery and professional gardening services in Kegalle. Discover plants, book services, and join workshops.">
-    <title>EcoSprout – Plant Nursery & Gardening Services | Kegalle, Sri Lanka</title>
+    <link rel="icon" type="image/svg+xml" href="<?= $base ?>/assets/favicon.svg">
+    <meta name="description" content="EcoSprout – Sri Lanka's premier plant nursery and professional gardening services in Matara. Discover plants, book services, and join workshops.">
+    <title>EcoSprout – Plant Nursery & Gardening Services | Matara, Sri Lanka</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -95,7 +96,7 @@ $base = getBaseUrl();
             <div class="col-lg-6">
                 <div class="hero-badge">
                     <i class="bi bi-geo-alt-fill"></i>
-                    Kegalle, Sri Lanka
+                    Matara, Sri Lanka
                 </div>
                 <h1 class="hero-title">
                     Grow Your <span>Green</span><br>Paradise
@@ -210,13 +211,7 @@ $base = getBaseUrl();
                              class="plant-card-img">
                     <?php else: ?>
                         <div class="plant-card-img-placeholder">
-                            <?= match($plant['category']) {
-                                'indoor'     => '🪴',
-                                'outdoor'    => '🌿',
-                                'ornamental' => '🌺',
-                                'edible'     => '🌿',
-                                default      => '🌱'
-                            } ?>
+                            <i class="bi <?= plantCategoryIcon($plant['category']) ?>" aria-hidden="true"></i>
                         </div>
                     <?php endif; ?>
                     <div class="plant-card-body">
@@ -320,10 +315,17 @@ $base = getBaseUrl();
             <?php if (empty($upcomingWorkshops)): ?>
                 <div class="col-12 text-center text-muted py-4">New workshops will be announced soon.</div>
             <?php else: ?>
-                <?php foreach ($upcomingWorkshops as $workshop): ?>
+                <?php foreach ($upcomingWorkshops as $workshop):
+                    $workshopTitle = strtolower($workshop['title'] ?? '');
+                    $workshopIcon = str_contains($workshopTitle, 'kitchen') || str_contains($workshopTitle, 'edible')
+                        ? 'bi-basket2'
+                        : (str_contains($workshopTitle, 'tropical') || str_contains($workshopTitle, 'care')
+                            ? 'bi-flower1'
+                            : 'bi-house-heart');
+                ?>
                     <div class="col-md-4">
                         <div class="eco-card text-center p-4 h-100">
-                            <div class="fs-1 mb-3">🌱</div>
+                            <div class="fs-1 mb-3 text-success"><i class="bi <?= $workshopIcon ?>"></i></div>
                             <h5 class="fw-bold"><?= htmlspecialchars($workshop['title']) ?></h5>
                             <p class="text-muted small"><?= nl2br(htmlspecialchars($workshop['description'] ?? 'Join us for a practical gardening workshop.')) ?></p>
                             <p class="small mb-2">
@@ -382,7 +384,7 @@ $base = getBaseUrl();
         <div class="row justify-content-center">
             <div class="col-lg-8 text-center">
                 <h2 class="fw-bold mb-3">Ready to Start Your Green Journey?</h2>
-                <p class="text-muted mb-4">Join hundreds of plant enthusiasts in Kegalle who trust EcoSprout for all their gardening needs.</p>
+                <p class="text-muted mb-4">Join hundreds of plant enthusiasts in Matara who trust EcoSprout for all their gardening needs.</p>
                 <div class="d-flex justify-content-center gap-3 flex-wrap">
                     <a href="<?= $base ?>/register.php" class="btn btn-eco-primary btn-lg px-5">
                         <i class="bi bi-person-plus me-2"></i> Create Free Account
@@ -410,7 +412,7 @@ $base = getBaseUrl();
                 </div>
                 <p class="small" style="color:rgba(255,255,255,0.65);">
                     Sri Lanka's trusted plant nursery and professional gardening services provider. 
-                    Bringing nature closer to every home in Kegalle and beyond.
+                    Bringing nature closer to every home in Matara and beyond.
                 </p>
                 <div class="d-flex gap-2 mt-3">
                     <a href="#" class="btn btn-sm" style="background:rgba(255,255,255,0.1);color:#fff;">
@@ -456,7 +458,7 @@ $base = getBaseUrl();
                     <li class="mb-2">
                         <i class="bi bi-geo-alt-fill me-2" style="color:var(--eco-accent);"></i>
                         No. 42, Rajapihilla Road,<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;Kegalle, Sri Lanka
+                        &nbsp;&nbsp;&nbsp;&nbsp;Matara, Sri Lanka
                     </li>
                     <li class="mb-2">
                         <i class="bi bi-telephone-fill me-2" style="color:var(--eco-accent);"></i>

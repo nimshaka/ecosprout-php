@@ -147,7 +147,7 @@ $activePage  = 'orders';
 
                                 <div class="card-footer bg-white p-3 d-flex justify-content-between align-items-center">
                                     <span class="text-muted small">
-                                        <i class="bi bi-truck me-1 text-success"></i> Dispatched from Kegalle Nursery Hub
+                                        <i class="bi bi-truck me-1 text-success"></i> Dispatched from Matara Nursery Hub
                                     </span>
                                     <div>
                                         <span class="text-muted me-2">Grand Total:</span>

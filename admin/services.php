@@ -104,7 +104,7 @@ $actionUrl   = $base . '/actions/service_action.php';
                             </div>
                             <div>
                                 <div class="stat-label">Service Area</div>
-                                <div class="stat-value fs-5">Kegalle & Sabaragamuwa</div>
+                                <div class="stat-value fs-5">Matara & Southern Province</div>
                             </div>
                         </div>
                     </div>

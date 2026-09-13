@@ -246,7 +246,7 @@ $actionUrl   = $base . '/actions/workshop_action.php';
                                             </div>
                                             <div class="col-6">
                                                 <i class="bi bi-geo-alt text-danger me-1"></i>
-                                                Kegalle Nursery
+                                                Matara Nursery
                                             </div>
                                         </div>
                                     </div>

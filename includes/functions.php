@@ -170,6 +170,14 @@ function categoryBadge(string $category): string
 }
 
 /**
+ * Return a Bootstrap icon class for a plant category fallback image.
+ */
+function plantCategoryIcon(string $category): string
+{
+    return 'bi-flower1';
+}
+
+/**
  * Return a Bootstrap badge HTML for an order status.
  */
 function orderStatusBadge(string $status): string
@@ -243,7 +251,7 @@ function renderPagination(int $currentPage, int $totalPages, string $baseUrl, st
 {
     if ($totalPages <= 1) return;
 
-    echo '<nav aria-label="Page navigation"><ul class="pagination justify-content-center">';
+    echo '<nav class="mt-4" aria-label="Page navigation"><ul class="pagination justify-content-center">';
 
     // Previous
     $prevDisabled = $currentPage <= 1 ? 'disabled' : '';

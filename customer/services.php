@@ -95,7 +95,7 @@ $activePage  = 'services';
                         </span>
                         <h2 class="fw-bold mb-2">Expert Gardening & Landscape Solutions</h2>
                         <p class="text-white-50 mb-3">
-                            From complete lawn design and tree pruning to drip irrigation installations in Kegalle, our certified horticulturists ensure your green spaces flourish sustainably.
+                            From complete lawn design and tree pruning to drip irrigation installations in Matara, our certified horticulturists ensure your green spaces flourish sustainably.
                         </p>
                         <div class="d-flex flex-wrap gap-2">
                             <a href="#services-list" class="btn btn-warning text-dark fw-semibold">
@@ -157,7 +157,7 @@ $activePage  = 'services';
                                         <div class="service-icon-box bg-success-subtle text-success rounded-3 p-3">
                                             <i class="bi <?= $icon ?> fs-3"></i>
                                         </div>
-                                        <span class="badge bg-light text-secondary border">Kegalle & Surrounds</span>
+                                        <span class="badge bg-light text-secondary border">Matara & Surrounds</span>
                                     </div>
 
                                     <h5 class="card-title fw-bold text-dark mb-2"><?= htmlspecialchars($srv['service_name']) ?></h5>
@@ -227,8 +227,8 @@ $activePage  = 'services';
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Property Address in Kegalle / Region <span class="text-danger">*</span></label>
-                        <textarea name="address" rows="2" class="form-control" placeholder="Street address, town, and nearest landmark in Kegalle..." required>Kegalle, Sri Lanka</textarea>
+                        <label class="form-label fw-semibold">Property Address in Matara / Region <span class="text-danger">*</span></label>
+                        <textarea name="address" rows="2" class="form-control" placeholder="Street address, town, and nearest landmark in Matara..." required>Matara, Sri Lanka</textarea>
                     </div>
 
                     <div class="mb-3">

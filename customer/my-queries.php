@@ -113,7 +113,7 @@ $queryAction = $base . '/actions/query_action.php';
                                         </div>
                                     <?php else: ?>
                                         <div class="small text-muted fst-italic">
-                                            <i class="bi bi-info-circle me-1"></i> Our nursery staff in Kegalle will review this ticket and publish botanical care advice shortly.
+                                            <i class="bi bi-info-circle me-1"></i> Our nursery staff in Matara will review this ticket and publish botanical care advice shortly.
                                         </div>
                                     <?php endif; ?>
                                 </div>

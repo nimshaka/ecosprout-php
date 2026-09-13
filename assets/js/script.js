@@ -359,7 +359,14 @@ function confirmDelete(formId, message, icon) {
 }
 
 function confirmAction(formId, message, icon, title, confirmLabel) {
-    _showDeleteModal(formId, message || 'Are you sure you want to continue?', icon || '⚙️', title || 'Confirm Action', confirmLabel || 'Continue', 'btn-danger');
+    _showDeleteModal(
+        formId,
+        message || 'Are you sure you want to continue?',
+        icon || '⚙️',
+        title || 'Confirm Action',
+        confirmLabel || 'Continue',
+        'btn-danger'
+    );
 }
 
 /* Intercept legacy onsubmit="return confirm(…)" forms gracefully */

@@ -43,9 +43,31 @@ $orderBy = match($sort) {
     default      => 'ORDER BY created_at DESC'
 };
 
-$stmt = $pdo->prepare("SELECT * FROM plants $whereClause $orderBy");
-$stmt->execute($params);
+$perPage = 8;
+$currentPage = max(1, (int) ($_GET['page'] ?? 1));
+
+$countStmt = $pdo->prepare("SELECT COUNT(*) FROM plants $whereClause");
+$countStmt->execute($params);
+$totalPlants = (int) $countStmt->fetchColumn();
+$totalPages = max(1, (int) ceil($totalPlants / $perPage));
+$currentPage = min($currentPage, $totalPages);
+$offset = ($currentPage - 1) * $perPage;
+
+$stmt = $pdo->prepare("SELECT * FROM plants $whereClause $orderBy LIMIT ? OFFSET ?");
+foreach ($params as $index => $value) {
+    $stmt->bindValue($index + 1, $value, PDO::PARAM_STR);
+}
+$stmt->bindValue(count($params) + 1, $perPage, PDO::PARAM_INT);
+$stmt->bindValue(count($params) + 2, $offset, PDO::PARAM_INT);
+    $stmt->execute();
 $plants = $stmt->fetchAll();
+
+$paginationParams = array_filter([
+    'search' => $search,
+    'category' => $category,
+    'sort' => $sort !== 'newest' ? $sort : null,
+]);
+$paginationBaseUrl = '?' . http_build_query($paginationParams);
 
 $pageHeading = 'Browse Plant Catalogue';
 $activePage  = 'catalogue';
@@ -60,6 +82,7 @@ $cartAction  = $base . '/actions/cart_action.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= $base ?>/assets/css/style.css">
+        <link rel="icon" type="image/svg+xml" href="<?= $base ?>/assets/favicon.svg">
 </head>
 <body>
 <div class="app-wrapper">
@@ -75,7 +98,7 @@ $cartAction  = $base . '/actions/cart_action.php';
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                 <div>
                     <h2 class="h3 mb-1 text-dark fw-bold"><?= htmlspecialchars($pageHeading) ?></h2>
-                    <p class="text-muted mb-0">Explore healthy potted plants, exotic ornamentals, and home orchard varieties grown in Kegalle.</p>
+                    <p class="text-muted mb-0">Explore healthy potted plants, exotic ornamentals, and home orchard varieties grown in Matara.</p>
                 </div>
                 <div>
                     <a href="<?= $base ?>/customer/cart.php" class="btn btn-outline-success shadow-sm">
@@ -159,13 +182,13 @@ $cartAction  = $base . '/actions/cart_action.php';
                             <div class="card border-0 shadow-sm h-100 plant-card d-flex flex-column">
                                 <!-- Plant Image Container -->
                                 <div class="position-relative bg-light rounded-top overflow-hidden" style="height: 200px;">
-                                    <?php if (!empty($p['image'])): ?>
+                                    <?php if (!empty($p['image']) && file_exists(__DIR__ . '/../assets/images/plants/' . $p['image'])): ?>
                                         <img src="<?= $base ?>/assets/images/plants/<?= htmlspecialchars($p['image']) ?>" 
                                              alt="<?= htmlspecialchars($p['plant_name']) ?>" 
                                              class="w-100 h-100 object-fit-cover">
                                     <?php else: ?>
                                         <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-success-emphasis bg-success-subtle">
-                                            <i class="bi bi-flower1 display-4"></i>
+                                            <i class="bi <?= plantCategoryIcon($p['category']) ?> display-4"></i>
                                             <span class="small text-muted mt-1">EcoSprout Nursery</span>
                                         </div>
                                     <?php endif; ?>
@@ -227,6 +250,7 @@ $cartAction  = $base . '/actions/cart_action.php';
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <?php renderPagination($currentPage, $totalPages, $paginationBaseUrl); ?>
             <?php endif; ?>
 
         </div>
